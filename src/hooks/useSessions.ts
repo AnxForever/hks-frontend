@@ -126,11 +126,13 @@ function useSessionsController(): SessionsContextValue {
   const deleteSessionMutation = useDeleteSessionMutation()
   const sendMessageMutation = useSendMessageMutation()
 
-  const sessions = useMemo(
+  const sessions = useMemo<SessionSummary[]>(
     () => {
-      const src = USE_MOCK_STREAM ? mockSessions : serverSessions
-      if (!Array.isArray(src)) return []
-      return src.map(toSummary)
+      if (USE_MOCK_STREAM) {
+        if (!Array.isArray(mockSessions)) return []
+        return mockSessions.map(toSummary)
+      }
+      return serverSessions
     },
     [mockSessions, serverSessions],
   )

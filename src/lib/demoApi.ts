@@ -160,8 +160,8 @@ const RULES: DemoHandler[] = [
   [/\/news-monitor\/summary/, DEMO_MARKET_SUMMARY],
   [/\/news-monitor\/keywords/, DEMO_KEYWORDS],
   [/\/news-monitor\/news/, { news: DEMO_NEWS, total: DEMO_NEWS.length }],
-  // Shopify — listShopifyShops 返回 ShopifyShopInfo[]（数组）
-  [/\/shopify\/shops/, [{ shop: 'demo-store.myshopify.com', name: 'Demo Store', status: 'active', plan: 'basic' }]],
+  // Shopify — ShopifyShopInfo[] (需要 scope 字段)
+  [/\/shopify\/shops/, [{ shop: 'demo-store.myshopify.com', name: 'Demo Store', status: 'active', scope: 'read_products,write_products,read_orders' }]],
   // Agent 列表
   [/\/agents/, [{ id: 'a1', name: '合规查询 Agent', enabled: true, sort_order: 1 }, { id: 'a2', name: '风险预警 Agent', enabled: true, sort_order: 2 }, { id: 'a3', name: '知识检索 Agent', enabled: true, sort_order: 3 }]],
   // 会话 — SessionSummary[]（无 wrapper）

@@ -127,7 +127,7 @@ const RULES: DemoHandler[] = [
   // 模型路由
   [/\/model-configs\/active/, { routes: Object.fromEntries(DEMO_ROUTES.map(r => [r.role, { provider: r.provider, model: r.model, max_tokens: r.max_tokens }])), fallback_chain: {} }],
   [/\/model-configs\/usage/, { total_tokens: 284000, by_model: { 'claude-sonnet-4': 210000, 'claude-haiku-3-5': 74000 }, routes: { default: 'claude-sonnet-4', chat: 'claude-sonnet-4', compliance: 'claude-sonnet-4', summary: 'claude-haiku-3-5' } }],
-  [/\/model-configs\//, (_u, _m) => null], // 单条路由（demo 用不到）
+  [/\/model-configs\//, (_u: string, _m: string) => null], // 单条路由（demo 用不到）
   [/\/model-configs/, { configs: DEMO_ROUTES }],
   // 第三方平台
   [/\/integrations\/providers/, { providers: DEMO_INTEGRATIONS }],
@@ -149,7 +149,7 @@ const RULES: DemoHandler[] = [
   // 产品
   [/\/products\/[^/]+\/events/, { events: [{ type: 'product:created', timestamp: day(90) }, { type: 'lifecycle_stage', data: { new_stage: 'fulfilling' }, timestamp: day(30) }], total: 2 }],
   [/\/products\/[^/]+\/lifecycle/, DEMO_PRODUCTS[0]], // PUT lifecycle 返回更新后的产品
-  [/\/products\//, (_u, _m) => DEMO_PRODUCTS[0]], // GET /products/:id
+  [/\/products\//, (_u: string, _m: string) => DEMO_PRODUCTS[0]], // GET /products/:id
   [/\/products/, DEMO_PRODUCTS],
   // 知识库
   [/\/knowledge\/docs/, DEMO_KNOWLEDGE_DOCS],

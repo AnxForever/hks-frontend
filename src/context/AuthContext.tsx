@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
 import { useWebSocket } from '@/hooks/useWebSocket'
+import { demoResponse } from '@/lib/demoApi'
 
 const API = '/api/v1'
 
@@ -111,6 +112,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   /** 带 Authorization 的 fetch 封装 */
   const authFetch = useCallback(
     (input: RequestInfo, init: RequestInit = {}): Promise<Response> => {
+      if (DEMO_MODE) return Promise.resolve(demoResponse(input, init)) // Demo：短路返回空数据，不打后端
       const headers = new Headers(init.headers || {})
       if (token) headers.set('Authorization', `Bearer ${token}`)
       return fetch(input, { ...init, headers })

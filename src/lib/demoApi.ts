@@ -164,6 +164,9 @@ const RULES: DemoHandler[] = [
   [/\/shopify\/shops/, [{ shop: 'demo-store.myshopify.com', name: 'Demo Store', status: 'active', scope: 'read_products,write_products,read_orders' }]],
   // Agent 列表
   [/\/agents/, [{ id: 'a1', name: '合规查询 Agent', enabled: true, sort_order: 1 }, { id: 'a2', name: '风险预警 Agent', enabled: true, sort_order: 2 }, { id: 'a3', name: '知识检索 Agent', enabled: true, sort_order: 3 }]],
+  // Browser
+  [/\/browser\/status/, { connected: false, session_id: null }],
+  [/\/browser\/snapshot/, { connected: false }],
   // 用户管理
   [/\/users/, [{ id: '1', username: 'Demo 访客', role: 'admin', created_at: day(30) }, { id: '2', username: 'operator', role: 'user', created_at: day(20) }]],
   // NL-Store — 返回 NLSummaryItem[]

@@ -127,7 +127,11 @@ function useSessionsController(): SessionsContextValue {
   const sendMessageMutation = useSendMessageMutation()
 
   const sessions = useMemo(
-    () => (USE_MOCK_STREAM ? mockSessions.map(toSummary) : serverSessions),
+    () => {
+      const src = USE_MOCK_STREAM ? mockSessions : serverSessions
+      if (!Array.isArray(src)) return []
+      return src.map(toSummary)
+    },
     [mockSessions, serverSessions],
   )
   const loading = !currentSession && (loadingList || loadingSession)

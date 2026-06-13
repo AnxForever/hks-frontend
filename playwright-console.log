@@ -1,0 +1,20 @@
+Total messages: 19 (Errors: 9, Warnings: 1)
+Returning 17 messages for level "info"
+
+[INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=7aeb2480:20102
+[WARNING] WebSocket connection to 'ws://localhost:8000/api/v1/ws?user_id=default' failed: WebSocket is closed before the connection is established. @ http://localhost:5173/src/hooks/useWebSocket.ts:64
+[ERROR] [WebSocket] Error occurred @ http://localhost:5173/src/hooks/useWebSocket.ts:27
+[LOG] [WebSocket] Disconnected, reconnecting in 5s... @ http://localhost:5173/src/hooks/useWebSocket.ts:22
+[VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:5173/login:0
+[ERROR] WebSocket connection to 'ws://localhost:8000/api/v1/ws?user_id=default' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/hooks/useWebSocket.ts:13
+[ERROR] [WebSocket] Error occurred @ http://localhost:5173/src/hooks/useWebSocket.ts:27
+[LOG] [WebSocket] Disconnected, reconnecting in 5s... @ http://localhost:5173/src/hooks/useWebSocket.ts:22
+[ERROR] WebSocket connection to 'ws://localhost:8000/api/v1/ws?user_id=default' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/hooks/useWebSocket.ts:13
+[ERROR] [WebSocket] Error occurred @ http://localhost:5173/src/hooks/useWebSocket.ts:27
+[LOG] [WebSocket] Disconnected, reconnecting in 5s... @ http://localhost:5173/src/hooks/useWebSocket.ts:22
+[ERROR] WebSocket connection to 'ws://localhost:8000/api/v1/ws?user_id=default' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/hooks/useWebSocket.ts:13
+[ERROR] [WebSocket] Error occurred @ http://localhost:5173/src/hooks/useWebSocket.ts:27
+[LOG] [WebSocket] Disconnected, reconnecting in 5s... @ http://localhost:5173/src/hooks/useWebSocket.ts:22
+[ERROR] WebSocket connection to 'ws://localhost:8000/api/v1/ws?user_id=default' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5173/src/hooks/useWebSocket.ts:13
+[ERROR] [WebSocket] Error occurred @ http://localhost:5173/src/hooks/useWebSocket.ts:27
+[LOG] [WebSocket] Disconnected, reconnecting in 5s... @ http://localhost:5173/src/hooks/useWebSocket.ts:22

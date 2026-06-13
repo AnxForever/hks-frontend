@@ -1,0 +1,42 @@
+
+> astra-frontend@0.2.0 dev
+> vite --host 127.0.0.1
+
+[2m16:19:35[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because vite config has changed
+
+  [32m[1mVITE[22m v6.4.2[39m  [2mready in [0m[1m285[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
+[2m16:21:01[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/layouts/AppLayout.tsx, /src/pages/ChatPage.tsx, /src/components/CommandPalette.tsx, /src/components/Sidebar.tsx[22m
+[2m16:22:30[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/chat/StreamMessageRenderer.tsx, /src/index.css[22m
+[2m16:23:04[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/chat/ComplianceCard.tsx, /src/index.css[22m
+[2m16:23:42[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/chat/MessageBubble.tsx, /src/index.css[22m
+[2m16:24:23[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/layouts/AppLayout.tsx, /src/pages/ChatPage.tsx, /src/components/CommandPalette.tsx, /src/components/Sidebar.tsx[22m
+[2m16:25:00[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/chat/ChatComposer.tsx, /src/index.css[22m
+[2m16:26:10[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/ChatPage.tsx, /src/index.css[22m
+[2m16:51:10[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/chat/StreamMessageRenderer.tsx, /src/index.css[22m
+[2m16:52:54[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/Dashboard.tsx, /src/index.css[22m
+[2m16:54:42[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/CompliancePage.tsx, /src/index.css[22m
+[2m16:55:10[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/CompliancePage.tsx, /src/index.css[22m
+[2m16:55:14[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/chat/StreamMessageRenderer.tsx, /src/index.css[22m
+[2m16:55:49[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/CompliancePage.tsx, /src/index.css[22m
+[2m16:56:19[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/CompliancePage.tsx, /src/index.css[22m
+[2m16:57:55[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/chat/ChatComposer.tsx, /src/index.css[22m
+[2m16:58:07[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/ChatPage.tsx, /src/index.css[22m
+[2m17:01:21[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/RiskCenter.tsx, /src/index.css[22m
+[2m17:02:14[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/layouts/AppLayout.tsx, /src/pages/ChatPage.tsx, /src/components/CommandPalette.tsx, /src/components/Sidebar.tsx[22m
+[2m17:07:54[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/Dashboard.tsx, /src/index.css, /src/pages/Dashboard.tsx?t=999[22m
+[2m17:13:44[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/ProductCompliancePage.tsx, /src/index.css[22m
+[2m17:14:26[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/CompliancePage.tsx, /src/index.css[22m
+[2m17:15:11[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/CompliancePage.tsx, /src/index.css[22m
+[2m17:20:01[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/CompliancePage.tsx, /src/index.css, /src/pages/CompliancePage.tsx?check=1[22m
+[2m17:20:11[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/RiskCenter.tsx, /src/index.css[22m
+[2m17:41:08[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/types/index.ts[22m
+[2m17:43:27[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/chat/StreamMessageRenderer.tsx, /src/index.css[22m
+[2m17:43:40[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/chat/MessageBubble.tsx, /src/index.css[22m
+[2m17:43:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/layouts/AppLayout.tsx, /src/pages/ChatPage.tsx, /src/components/CommandPalette.tsx, /src/components/Sidebar.tsx[22m
+[2m17:44:15[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/hooks/useSession.ts[22m
+[2m17:44:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/layouts/AppLayout.tsx, /src/pages/ChatPage.tsx, /src/components/CommandPalette.tsx, /src/components/Sidebar.tsx[22m
+[2m17:44:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/layouts/AppLayout.tsx, /src/pages/ChatPage.tsx, /src/components/CommandPalette.tsx, /src/components/Sidebar.tsx[22m
+[2m17:45:27[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/chat/RuntimePanels.tsx, /src/index.css[22m
+[2m17:52:14[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/layouts/AppLayout.tsx, /src/pages/ChatPage.tsx, /src/components/CommandPalette.tsx, /src/components/Sidebar.tsx[22m

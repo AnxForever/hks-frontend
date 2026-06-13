@@ -175,9 +175,9 @@ const RULES: DemoHandler[] = [
   // 会话 — SessionSummary[]（无 wrapper）
   [/\/sessions\//, (_u: string, _m: string) => null], // GET /sessions/:id 跳过
   [/\/sessions/, DEMO_SESSIONS],
-  // chains
-  [/\/chains\/events/, { events: [], total: 0 }],
-  [/\/chains\/actions/, { actions: [], total: 0 }],
+  // chains — 后端 response_model=list[...]，listEventChains/listActionChains 期望数组
+  [/\/chains\/events/, []],
+  [/\/chains\/actions/, []],
 ]
 
 function json(data: unknown): Response {

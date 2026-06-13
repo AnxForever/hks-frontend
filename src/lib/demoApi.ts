@@ -118,6 +118,29 @@ const DEMO_PROACTIVE_BRIEFS = [
 
 const DEMO_SESSIONS = [{ session_id: 's1', title: '蓝牙耳机 EU 合规检查', created_at: day(2), updated_at: day(1), message_count: 8 }, { session_id: 's2', title: '电动滑板车风险分析', created_at: day(3), updated_at: day(2), message_count: 12 }]
 
+/* Agent 配置 — 字段对齐后端 AgentListItem / AgentResponse（agent_crud.py）。
+   type 取合法值：general/export_law/tax/culture/certification/custom */
+const AGENT_PROMPTS = {
+  general: '你是避风港通用合规助手。基于法规知识库回答跨境合规问题，给出 HS 编码、目标市场认证清单与风险提示。回答需标注来源、区分确定与待核实项。',
+  export_law: '你是出境法律顾问，负责出口管制（EAR / EU 双用途）、禁运清单与制裁合规判断，给出许可判定与风险等级。',
+  tax: '你是税务合规专家，计算关税、VAT 与消费税，提示申报义务、起征点与税务风险。',
+  culture: '你是民俗文化顾问，提示目标市场的文化禁忌、强制标签要求与本地化合规风险。',
+  certification: '你是认证标准专家，解读 CE、FCC、PSE、KC、RoHS 等认证的适用范围、测试要求与获证路径。',
+  custom: '你是锂电池专项合规顾问，处理 UN38.3、MSDS、运输鉴定与仓储合规。',
+}
+const DEMO_AGENTS_FULL = [
+  { id: 'agent_general', name: '通用合规助手', type: 'general', description: '处理通用跨境合规咨询，覆盖 HS 编码、关税与认证基础问题。', system_prompt: AGENT_PROMPTS.general, enabled: true, sort_order: 1, created_at: day(30), updated_at: day(2) },
+  { id: 'agent_export_law', name: '出境法律顾问', type: 'export_law', description: '出口管制、贸易合规与禁运清单核查。', system_prompt: AGENT_PROMPTS.export_law, enabled: true, sort_order: 2, created_at: day(28), updated_at: day(3) },
+  { id: 'agent_tax', name: '税务合规专家', type: 'tax', description: '关税、VAT、消费税与申报规则。', system_prompt: AGENT_PROMPTS.tax, enabled: true, sort_order: 3, created_at: day(26), updated_at: day(4) },
+  { id: 'agent_culture', name: '民俗文化顾问', type: 'culture', description: '文化禁忌、标签与本地化合规。', system_prompt: AGENT_PROMPTS.culture, enabled: false, sort_order: 4, created_at: day(24), updated_at: day(6) },
+  { id: 'agent_cert', name: '认证标准专家', type: 'certification', description: 'CE / FCC / PSE / KC 等认证标准解读。', system_prompt: AGENT_PROMPTS.certification, enabled: true, sort_order: 5, created_at: day(22), updated_at: day(1) },
+  { id: 'agent_custom_battery', name: '锂电池专项合规', type: 'custom', description: '含锂电池产品的 UN38.3、运输与存储合规。', system_prompt: AGENT_PROMPTS.custom, enabled: true, sort_order: 99, created_at: day(10), updated_at: day(1) },
+]
+function agentListItem(a: (typeof DEMO_AGENTS_FULL)[number]) {
+  const { system_prompt, ...rest } = a
+  return { ...rest, system_prompt_preview: system_prompt.slice(0, 80) }
+}
+
 /* ── 匹配引擎 ─────────────────────────────── */
 
 type DemoHandler = [RegExp, unknown | ((url: string, method: string) => unknown)]
@@ -162,8 +185,17 @@ const RULES: DemoHandler[] = [
   [/\/news-monitor\/news/, { news: DEMO_NEWS, total: DEMO_NEWS.length }],
   // Shopify — ShopifyShopInfo[] (需要 scope 字段)
   [/\/shopify\/shops/, [{ shop: 'demo-store.myshopify.com', name: 'Demo Store', status: 'active', scope: 'read_products,write_products,read_orders' }]],
-  // Agent 列表
-  [/\/agents/, [{ id: 'a1', name: '合规查询 Agent', enabled: true, sort_order: 1 }, { id: 'a2', name: '风险预警 Agent', enabled: true, sort_order: 2 }, { id: 'a3', name: '知识检索 Agent', enabled: true, sort_order: 3 }]],
+  // Agent — 详情/更新/删除（:id）须在列表前匹配；返回单个 AgentResponse
+  [/\/agents\/[^/?]+$/, (url: string) => {
+    const id = /\/agents\/([^/?]+)$/.exec(url)?.[1]
+    return DEMO_AGENTS_FULL.find((a) => a.id === id) ?? DEMO_AGENTS_FULL[0]
+  }],
+  // Agent 列表（GET）/ 创建（POST）— 列表项用 system_prompt_preview
+  [/\/agents/, (_u: string, method: string) =>
+    method === 'GET'
+      ? DEMO_AGENTS_FULL.map(agentListItem)
+      : DEMO_AGENTS_FULL[0],
+  ],
   // Browser
   [/\/browser\/status/, { connected: false, session_id: null }],
   [/\/browser\/snapshot/, { connected: false }],

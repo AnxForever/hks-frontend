@@ -30,6 +30,7 @@ import { useChangePassword } from '@/hooks/queries/useNotify'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { NotificationBell } from '@/components/common/NotificationBell'
 import {
   Dialog,
   DialogContent,
@@ -129,6 +130,7 @@ export default function Sidebar() {
           <div className="text-[14px] font-semibold tracking-tight">避风港</div>
           <div className="text-[10.5px] text-muted-foreground">跨境合规智能体</div>
         </div>
+        <NotificationBell className="ml-auto hidden lg:flex" />
       </div>
 
       {/* 主导航 */}
@@ -344,6 +346,7 @@ export default function Sidebar() {
             </div>
             <div className="text-[13px] font-semibold">避风港</div>
           </div>
+          <NotificationBell className="ml-auto" />
         </header>
       </div>
     </>

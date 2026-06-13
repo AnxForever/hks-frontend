@@ -21,6 +21,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ErrorState } from '@/components/common/ErrorState'
 import { LoadingState } from '@/components/common/LoadingState'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/context/AuthContext'
@@ -124,7 +125,7 @@ function Metric({
 export default function Dashboard() {
   const navigate = useNavigate()
   const { authFetch, user } = useAuth()
-  const { data: shops, isLoading: shopsLoading } = useShopifyShops()
+  const { data: shops, isLoading: shopsLoading, isError: shopsError, refetch: refetchShops } = useShopifyShops()
   const { data: kStats, isLoading: statsLoading } = useKnowledgeStats()
   const overview = useOverview(true)
   const [dashboardMetrics, setDashboardMetrics] = useState<DashboardMetrics | null>(null)
@@ -331,6 +332,18 @@ export default function Dashboard() {
               <Skeleton className="mt-1 h-4 w-48" />
             </div>
             <LoadingState variant="cards" count={3} />
+          </section>
+        ) : shopsError ? (
+          <section>
+            <div className="mb-4">
+              <h2 className="text-[16px] font-semibold tracking-tight">已连接店铺</h2>
+              <p className="mt-1 text-[13px] text-muted-foreground">点击进入产品合规检查</p>
+            </div>
+            <ErrorState
+              title="店铺加载失败"
+              description="无法获取已连接店铺列表，请重试"
+              onRetry={() => refetchShops()}
+            />
           </section>
         ) : shops && shops.length > 0 ? (
           <section>

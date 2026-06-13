@@ -52,6 +52,16 @@ const RULES: Array<[RegExp, unknown]> = [
   [/\/knowledge\/search/, { results: [] }],
   // Shopify
   [/\/shopify\/shops/, { shops: [] }],
+  // 新闻监控
+  [/\/news-monitor\/summary/, {
+    bullish_count: 0,
+    bearish_count: 0,
+    neutral_count: 0,
+    high_risk_news: [],
+    period_hours: 24,
+  }],
+  [/\/news-monitor\/keywords/, { keywords: [], high_words: [] }],
+  [/\/news-monitor\/news/, { news: [], total: 0 }],
   // 其它列表
   [/\/news/, []],
   [/\/nl-?store/, []],

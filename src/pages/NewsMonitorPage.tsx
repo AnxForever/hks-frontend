@@ -59,6 +59,7 @@ export default function NewsMonitorPage() {
   const { data: kwConfig, isLoading: kwLoading } = useNewsKeywords()
   const collect = useNewsCollect()
   const updateKw = useUpdateKeywords()
+  const highRiskNews = summary?.high_risk_news ?? []
 
   const handleCollect = async () => {
     try {
@@ -123,7 +124,7 @@ export default function NewsMonitorPage() {
               <SummaryCard
                 icon={AlertTriangle}
                 label="高风险头条"
-                value={summary.high_risk_news.length}
+                value={highRiskNews.length}
                 tone="warning"
               />
             </>
@@ -162,7 +163,7 @@ export default function NewsMonitorPage() {
             {sumLoading ? (
               <Loader />
             ) : (
-              <HighRiskTab items={summary?.high_risk_news} />
+              <HighRiskTab items={highRiskNews} />
             )}
           </TabsContent>
 

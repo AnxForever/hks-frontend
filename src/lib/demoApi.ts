@@ -11,6 +11,8 @@ const NOW = new Date().toISOString()
 const day = (n: number) => {
   const d = new Date(); d.setDate(d.getDate() - n); return d.toISOString()
 }
+/** Unix epoch 秒（对齐后端 int(time.time())，KnowledgeDoc.created_at/updated_at 用） */
+const daySec = (n: number) => Math.floor((Date.now() - n * 86_400_000) / 1000)
 
 const DEMO_PRODUCTS = [
   { id: 'p01', name: '蓝牙耳机 TWS-Pro', product_type: '消费电子', target_markets: ['eu','us','jp'], hs_code: '8518.30', vendor: '深圳华强北电子', tags: ['蓝牙','无线'], lifecycle_stage: 'fulfilling' as const, compliance_status: 'passed', risk_level: 'low', health_score: 92, certifications: [{name:'CE',status:'有效'},{name:'FCC',status:'有效'},{name:'RoHS',status:'有效'}], created_at: day(90), updated_at: day(2) },
@@ -97,11 +99,12 @@ const DEMO_PIPELINE_HEALTH = {
   last_updated: NOW,
 }
 
+// 字段对齐 KnowledgeDoc（types/index.ts）：id/name/doc_type/market/status/chunk_count/created_at(秒)
 const DEMO_KNOWLEDGE_DOCS = [
-  { doc_id: 'd1', filename: '欧盟RoHS指令_2026修订版.pdf', status: 'done', market: 'eu', regulation_name: 'RoHS 3.0', size_bytes: 2450000, chunks: 42, created_at: day(7), updated_at: day(7) },
-  { doc_id: 'd2', filename: 'FCC_Part15_无线设备规则.pdf', status: 'done', market: 'us', regulation_name: 'FCC Part 15', size_bytes: 1800000, chunks: 31, created_at: day(5), updated_at: day(5) },
-  { doc_id: 'd3', filename: '日本電気用品安全法_施行令.pdf', status: 'done', market: 'jp', regulation_name: 'PSE 法', size_bytes: 3200000, chunks: 56, created_at: day(10), updated_at: day(10) },
-  { doc_id: 'd4', filename: 'REACH_SVHC候选清单_2026更新.pdf', status: 'indexing', market: 'eu', regulation_name: 'REACH SVHC', size_bytes: 4100000, chunks: 0, created_at: day(0.5), updated_at: day(0.5) },
+  { id: 'd1', user_id: 'demo', doc_type: 'pdf', name: '欧盟RoHS指令_2026修订版.pdf', source_url: '', market: 'eu', status: 'done', chunk_count: 42, error_msg: '', created_at: daySec(7), updated_at: daySec(7) },
+  { id: 'd2', user_id: 'demo', doc_type: 'pdf', name: 'FCC_Part15_无线设备规则.pdf', source_url: '', market: 'us', status: 'done', chunk_count: 31, error_msg: '', created_at: daySec(5), updated_at: daySec(5) },
+  { id: 'd3', user_id: 'demo', doc_type: 'pdf', name: '日本電気用品安全法_施行令.pdf', source_url: '', market: 'jp', status: 'done', chunk_count: 56, error_msg: '', created_at: daySec(10), updated_at: daySec(10) },
+  { id: 'd4', user_id: 'demo', doc_type: 'url', name: 'REACH SVHC 候选清单 2026 更新', source_url: 'https://echa.europa.eu/svhc', market: 'eu', status: 'indexing', chunk_count: 0, error_msg: '', created_at: daySec(0.5), updated_at: daySec(0.5) },
 ]
 
 const DEMO_KNOWLEDGE_STATS = { total_docs: 4, total_vectors: 129, by_market: { eu: 78, us: 31, jp: 56 } }
@@ -177,7 +180,7 @@ const RULES: DemoHandler[] = [
   // 知识库
   [/\/knowledge\/docs/, DEMO_KNOWLEDGE_DOCS],
   [/\/knowledge\/stats/, DEMO_KNOWLEDGE_STATS],
-  [/\/knowledge\/search/, { results: DEMO_KNOWLEDGE_DOCS.map(d => ({ doc_id: d.doc_id, filename: d.filename, content: `[${d.regulation_name || d.market}] 法规摘要...`, score: 0.85 })) }],
+  [/\/knowledge\/search/, { results: DEMO_KNOWLEDGE_DOCS.map(d => ({ doc_id: d.id, regulation_name: d.name, market: d.market, content: `[${d.market.toUpperCase()}] 法规摘要示例…`, score: 0.85 })) }],
   [/\/knowledge\/url/, { doc_id: 'd5', filename: 'imported-url', status: 'indexing' }],
   // 新闻监控
   [/\/news-monitor\/summary/, DEMO_MARKET_SUMMARY],

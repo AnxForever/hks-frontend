@@ -164,6 +164,11 @@ const RULES: DemoHandler[] = [
   [/\/shopify\/shops/, [{ shop: 'demo-store.myshopify.com', name: 'Demo Store', status: 'active', scope: 'read_products,write_products,read_orders' }]],
   // Agent 列表
   [/\/agents/, [{ id: 'a1', name: '合规查询 Agent', enabled: true, sort_order: 1 }, { id: 'a2', name: '风险预警 Agent', enabled: true, sort_order: 2 }, { id: 'a3', name: '知识检索 Agent', enabled: true, sort_order: 3 }]],
+  // 用户管理
+  [/\/users/, [{ id: '1', username: 'Demo 访客', role: 'admin', created_at: day(30) }, { id: '2', username: 'operator', role: 'user', created_at: day(20) }]],
+  // NL-Store — 返回 NLSummaryItem[]
+  [/\/nl-store\/[^/]+$/, [{ key: 'eu_battery_law', title: '欧盟电池法规要点', content_nl: '2026年起含锂电池产品需提供碳足迹声明和供应链尽职调查', tags: ['EU','电池','法规'] }, { key: 'fcc_2.4ghz', title: 'FCC 2.4GHz 发射规则', content_nl: 'FCC拟修订2.4GHz无线设备功率限值', tags: ['US','无线','FCC'] }]],
+  [/\/nl-store/, []],
   // 会话 — SessionSummary[]（无 wrapper）
   [/\/sessions\//, (_u: string, _m: string) => null], // GET /sessions/:id 跳过
   [/\/sessions/, DEMO_SESSIONS],

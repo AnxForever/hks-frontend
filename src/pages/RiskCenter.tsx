@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
+import { EmptyState } from '@/components/common/EmptyState'
 import { toast } from 'sonner'
 
 const API_BASE = '/api/v1'
@@ -426,14 +427,10 @@ export default function RiskCenter() {
 
         {/* Alerts Table - Vercel 风格：紧凑的表格 */}
         {filteredAlerts.length === 0 ? (
-          <div className="py-16 text-center">
-            <div className="mb-2 text-[15px] font-medium text-muted-foreground">
-              {activeTab === 'unread' ? '暂无未读预警' : '暂无预警'}
-            </div>
-            <p className="text-[13px] text-muted-foreground/70">
-              系统会自动监控市场动态并推送风险提示
-            </p>
-          </div>
+          <EmptyState
+            title={activeTab === 'unread' ? '暂无未读预警' : '暂无预警'}
+            description="系统会自动监控市场动态并推送风险提示"
+          />
         ) : (
           <div className="overflow-hidden rounded-lg border border-border/60" role="region" aria-live="polite" aria-label="风险预警列表">
             <table className="w-full">

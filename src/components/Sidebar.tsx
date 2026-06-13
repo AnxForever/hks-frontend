@@ -28,6 +28,7 @@ import { SessionList } from '@/components/chat/SessionList'
 import { useSessions } from '@/hooks/useSessions'
 import { useChangePassword } from '@/hooks/queries/useNotify'
 import { cn } from '@/lib/utils'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -217,9 +218,13 @@ export default function Sidebar() {
             </div>
             <div className="min-w-0 flex-1 leading-tight">
               <div className="truncate text-[12.5px] font-medium">{user.username}</div>
-              <div className="text-[10.5px] text-muted-foreground">
-                {isAdmin ? '管理员' : '成员'}
-              </div>
+              <Badge
+                variant={isAdmin ? 'secondary' : 'outline'}
+                className="mt-0.5 h-[18px] px-1.5 text-[10px] font-medium"
+              >
+                {/* PRD 三角色（独立卖家/企业/入门小白）待后端 roleLabel 字段；现回退 admin/user */}
+                {(user as { roleLabel?: string }).roleLabel ?? (isAdmin ? '管理员' : '成员')}
+              </Badge>
             </div>
             <ChevronDown
               className={cn(

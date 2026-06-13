@@ -3,10 +3,12 @@
  *
  * 整合 Shopify 店铺 / 知识库 / 聊天入口，用真实 API 数据替换旧的 complianceMock。
  */
-import { useEffect, useState, type ComponentType } from 'react'
+import { useEffect, useMemo, useState, type ComponentType } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
+  ArrowDown,
   ArrowRight,
+  ArrowUp,
   AlertTriangle,
   Database,
   Globe,
@@ -19,6 +21,8 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { LoadingState } from '@/components/common/LoadingState'
+import { cn } from '@/lib/utils'
 import { useAuth } from '@/context/AuthContext'
 import { useKnowledgeStats } from '@/hooks/queries/useKnowledge'
 import { useOverview } from '@/hooks/queries/useOverview'
@@ -50,6 +54,28 @@ const quickQueries = [
   { product: '蓝牙耳机', country: '美国', tag: 'FCC · UL · CA Prop 65' },
 ]
 
+/* ─────────────────────────── TrendBadge ─────────────────────────── */
+
+/** 数据卡「较昨日」趋势徽标（PRD：绿色增 / 红色减）。delta 真实派生自环比数据。 */
+function TrendBadge({ delta, label }: { delta: number; label?: string }) {
+  // delta=0（无环比变化）不显示徽标，避免标题旁孤立的占位
+  if (delta === 0) return null
+  const up = delta > 0
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center gap-0.5 text-[11px] font-medium tabular-nums',
+        up ? 'text-emerald-600 dark:text-emerald-400' : 'text-destructive',
+      )}
+      title={`较昨日 ${up ? '+' : ''}${delta}${label ? ` ${label}` : ''}`}
+    >
+      {up ? <ArrowUp className="size-3" /> : <ArrowDown className="size-3" />}
+      {up ? '+' : ''}
+      {delta}
+    </span>
+  )
+}
+
 /* ─────────────────────────── Metric ─────────────────────────── */
 
 function Metric({
@@ -59,6 +85,7 @@ function Metric({
   Icon,
   onClick,
   loading,
+  trend,
 }: {
   label: string
   value: string | number
@@ -66,6 +93,8 @@ function Metric({
   Icon: ComponentType<{ className?: string }>
   onClick?: () => void
   loading?: boolean
+  /** 较昨日环比；后端 /dashboard/summary 提供每卡 delta 后可直接传入 */
+  trend?: { delta: number; label?: string }
 }) {
   const C = onClick ? 'button' : 'div'
   return (
@@ -75,7 +104,10 @@ function Metric({
     >
       <div className="mb-5 flex items-center justify-between">
         <div className="text-[12px] font-medium text-muted-foreground">{label}</div>
-        <Icon className="size-4 text-muted-foreground" />
+        <div className="flex items-center gap-2">
+          {trend && <TrendBadge delta={trend.delta} label={trend.label} />}
+          <Icon className="size-4 text-muted-foreground" />
+        </div>
       </div>
       {loading ? (
         <Skeleton className="h-9 w-20" />
@@ -117,6 +149,13 @@ export default function Dashboard() {
     }
   }, [authFetch, user?.id])
 
+  // 合规检查「较昨日」趋势 — 真实派生自 trend 序列（PRD 数据卡环比）
+  const checksDelta = useMemo(() => {
+    const t = dashboardMetrics?.trend
+    if (!t || t.length < 2) return null
+    return (t[t.length - 1]?.checks ?? 0) - (t[t.length - 2]?.checks ?? 0)
+  }, [dashboardMetrics?.trend])
+
   const totalDocs = kStats?.total_docs ?? 0
   const metricsLoading = statsLoading || dashboardLoading || overview.isLoading
   const riskDistribution = dashboardMetrics?.risk_distribution
@@ -146,7 +185,12 @@ export default function Dashboard() {
                 <span className="h-px w-6 bg-border" />
                 OS 级合规智能体控制台
               </div>
-              <h1 className="text-[28px] font-semibold tracking-tight">概览</h1>
+              <h1 className="flex items-center gap-2 text-[28px] font-semibold tracking-tight">
+                概览
+                {checksDelta !== null && !dashboardLoading && (
+                  <TrendBadge delta={checksDelta} label="次合规检查" />
+                )}
+              </h1>
               <p className="mt-1 max-w-2xl text-[14px] leading-6 text-muted-foreground">
                 Shopify 店铺纳管 · RAG 知识库 · 合规对话工作台
               </p>
@@ -286,15 +330,7 @@ export default function Dashboard() {
               <Skeleton className="h-5 w-28" />
               <Skeleton className="mt-1 h-4 w-48" />
             </div>
-            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="rounded-lg border border-border/60 bg-card p-4">
-                  <Skeleton className="h-5 w-40" />
-                  <Skeleton className="mt-2 h-4 w-32" />
-                  <Skeleton className="mt-4 h-4 w-20" />
-                </div>
-              ))}
-            </div>
+            <LoadingState variant="cards" count={3} />
           </section>
         ) : shops && shops.length > 0 ? (
           <section>

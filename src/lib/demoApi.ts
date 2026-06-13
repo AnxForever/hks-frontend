@@ -210,6 +210,18 @@ const RULES: DemoHandler[] = [
   // chains — 后端 response_model=list[...]，listEventChains/listActionChains 期望数组
   [/\/chains\/events/, []],
   [/\/chains\/actions/, []],
+  // 仪表盘指标 — 后端 risk.py get_dashboard()，字段对齐前端 DashboardMetrics
+  [/\/metrics\/dashboard/, () => {
+    const countRisk = (lvl: string) => DEMO_PRODUCTS.filter((p) => p.risk_level === lvl).length
+    return {
+      total_products: DEMO_PRODUCTS.length,
+      risk_distribution: { low: countRisk('low'), medium: countRisk('medium'), high: countRisk('high'), critical: countRisk('critical') },
+      recent_alerts: DEMO_ALERTS.slice(0, 5),
+      active_markets: Array.from(new Set(DEMO_PRODUCTS.flatMap((p) => p.target_markets))),
+      health_score: Math.round(DEMO_PRODUCTS.reduce((sum, p) => sum + (p.health_score ?? 0), 0) / DEMO_PRODUCTS.length),
+      trend: [6, 5, 3].map((checks, i) => ({ date: day(i), checks })),
+    }
+  }],
 ]
 
 function json(data: unknown): Response {

@@ -27,7 +27,8 @@ export default function AppLayout() {
 
   return (
     <SessionProvider>
-      <div className="flex h-screen bg-background">
+      {/* fixed inset-0：脱离文档流锁定视口，避免内容撑高 documentElement 触发最外层滚动条 */}
+      <div className="fixed inset-0 flex overflow-hidden bg-background">
         <Sidebar />
         <main className="flex flex-1 flex-col overflow-hidden pt-14 lg:pt-0">
           <ErrorBoundary>

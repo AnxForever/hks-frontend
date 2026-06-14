@@ -124,7 +124,7 @@ function Metric({
 
 export default function Dashboard() {
   const navigate = useNavigate()
-  const { authFetch, user } = useAuth()
+  const { authFetch, user, isAdmin } = useAuth()
   const { data: shops, isLoading: shopsLoading, isError: shopsError, refetch: refetchShops } = useShopifyShops()
   const { data: kStats, isLoading: statsLoading } = useKnowledgeStats()
   const overview = useOverview(true)
@@ -203,7 +203,7 @@ export default function Dashboard() {
                 onClick={() => navigate('/app/compliance/system')}
               >
                 <Store className="mr-2 size-4" />
-                系统合规
+                店铺合规
               </Button>
               <Button className="h-9 text-[13px]" onClick={() => navigate('/app/products')}>
                 <PackageCheck className="mr-2 size-4" />
@@ -238,7 +238,7 @@ export default function Dashboard() {
             value={healthScore}
             detail="聚合产品、预警与流水线计算"
             Icon={ShieldCheck}
-            onClick={() => navigate('/app/risk-center')}
+            onClick={() => navigate('/app/monitor')}
             loading={metricsLoading}
           />
           <Metric
@@ -246,25 +246,29 @@ export default function Dashboard() {
             value={activeRiskCount}
             detail="中高风险和严重风险待处理数"
             Icon={AlertTriangle}
-            onClick={() => navigate('/app/risk-center')}
+            onClick={() => navigate('/app/monitor')}
             loading={metricsLoading}
           />
-          <Metric
-            label="定时任务"
-            value={schedulerStats?.total ?? 0}
-            detail={schedulerStats ? `${schedulerStats.active} 运行中 · ${schedulerStats.paused} 暂停` : '调度器状态待加载'}
-            Icon={Timer}
-            onClick={() => navigate('/app/scheduler')}
-            loading={metricsLoading}
-          />
-          <Metric
-            label="第三方连接"
-            value={integrationConnected}
-            detail={`${Object.keys(integrationStatus).length} 类 Provider 状态`}
-            Icon={PlugZap}
-            onClick={() => navigate('/app/integrations')}
-            loading={metricsLoading}
-          />
+          {isAdmin && (
+            <>
+              <Metric
+                label="定时任务"
+                value={schedulerStats?.total ?? 0}
+                detail={schedulerStats ? `${schedulerStats.active} 运行中 · ${schedulerStats.paused} 暂停` : '调度器状态待加载'}
+                Icon={Timer}
+                onClick={() => navigate('/app/scheduler')}
+                loading={metricsLoading}
+              />
+              <Metric
+                label="第三方连接"
+                value={integrationConnected}
+                detail={`${Object.keys(integrationStatus).length} 类 Provider 状态`}
+                Icon={PlugZap}
+                onClick={() => navigate('/app/integrations')}
+                loading={metricsLoading}
+              />
+            </>
+          )}
         </section>
 
         {/* Quick Start + Markets */}

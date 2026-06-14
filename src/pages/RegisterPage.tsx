@@ -136,7 +136,7 @@ export default function RegisterPage() {
           <div className="mt-8 text-center text-sm text-muted-foreground">
             已有账户？{' '}
             <Link
-              to="/login"
+              to="/auth/login"
               className="text-cream-foreground hover:underline underline-offset-4"
             >
               直接登录

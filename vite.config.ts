@@ -2,6 +2,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import type { PreRenderedChunk } from 'rollup'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -25,6 +26,11 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
+        chunkFileNames: (chunkInfo: PreRenderedChunk) => {
+          const facadeId = chunkInfo.facadeModuleId?.split(path.sep).join('/')
+          if (facadeId?.includes('/src/pages/')) return 'assets/[name].js'
+          return 'assets/[name]-[hash].js'
+        },
         manualChunks: {
           // React 核心库
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],

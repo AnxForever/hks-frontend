@@ -1,5 +1,5 @@
 /**
- * 系统合规 — Shopify 店铺总览
+ * 店铺合规 — Shopify 店铺总览
  *
  * 显示已连接店铺列表 + 各店铺产品数 + 快速合规检查入口
  */
@@ -29,7 +29,7 @@ export default function SystemCompliancePage() {
         <div className="mx-auto max-w-[1400px] px-6 py-7 sm:px-8">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <h1 className="text-[28px] font-semibold tracking-tight">系统合规</h1>
+              <h1 className="text-[28px] font-semibold tracking-tight">店铺合规</h1>
               <p className="mt-1 max-w-2xl text-[14px] leading-6 text-muted-foreground">
                 已连接 Shopify 店铺列表 · 对店铺产品批量合规检查
               </p>

@@ -10,20 +10,20 @@ function LoadingScreen() {
   )
 }
 
-/** 必须登录才能访问；否则跳 /login 并带 from 用于回跳 */
+/** 必须登录才能访问；否则跳 /auth/login 并带 from 用于回跳 */
 export function RequireAuth({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth()
   const location = useLocation()
   if (loading) return <LoadingScreen />
-  if (!user) return <Navigate to="/login" state={{ from: location }} replace />
+  if (!user) return <Navigate to="/auth/login" state={{ from: location }} replace />
   return <>{children}</>
 }
 
-/** 已登录用户不应再进 /login，自动跳回 /app/chat */
+/** 已登录用户不应再进认证页，自动跳回应用首页 */
 export function PublicOnly({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth()
   if (loading) return <LoadingScreen />
-  if (user) return <Navigate to="/app/chat" replace />
+  if (user) return <Navigate to="/app/dashboard" replace />
   return <>{children}</>
 }
 

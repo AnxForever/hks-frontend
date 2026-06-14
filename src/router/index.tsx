@@ -20,6 +20,7 @@ const LoginPage = lazy(() => import('@/pages/LoginPage'))
 const RegisterPage = lazy(() => import('@/pages/RegisterPage'))
 const KnowledgePage = lazy(() => import('@/pages/KnowledgePage'))
 const RiskCenter = lazy(() => import('@/pages/RiskCenter'))
+const SettingsPage = lazy(() => import('@/pages/SettingsPage'))
 const NewsMonitorPage = lazy(() => import('@/pages/NewsMonitorPage'))
 const NotifyConfigPage = lazy(() => import('@/pages/NotifyConfigPage'))
 const NLStorePage = lazy(() => import('@/pages/NLStorePage'))
@@ -48,9 +49,12 @@ const Lazy = ({ children }: { children: React.ReactNode }) => (
 /**
  * 路由表
  * ── /             marketing LandingPage（公开）
- * ── /login        PublicOnly + AuthLayout → LoginPage
- * ── /register     PublicOnly + AuthLayout → RegisterPage
+ * ── /auth/login   PublicOnly + AuthLayout → LoginPage
+ * ── /auth/signup  PublicOnly + AuthLayout → RegisterPage
+ * ── /login        legacy redirect → /auth/login
+ * ── /register     legacy redirect → /auth/signup
  * ── /app/*        RequireAuth + AppLayout
+ * ── /app/monitor  风险监控规范路由（/app/risk-center 保留重定向）
  * ── /app/agent-config 等  RequireAdmin
  * ── *             NotFoundPage（友好 404）
  */
@@ -66,32 +70,31 @@ export const router = createBrowserRouter([
   },
   {
     path: '/login',
+    element: <Navigate to="/auth/login" replace />,
+  },
+  {
+    path: '/register',
+    element: <Navigate to="/auth/signup" replace />,
+  },
+  {
+    path: '/auth',
     element: (
       <PublicOnly>
         <AuthLayout />
       </PublicOnly>
     ),
     children: [
+      { index: true, element: <Navigate to="/auth/login" replace /> },
       {
-        index: true,
+        path: 'login',
         element: (
           <Lazy>
             <LoginPage />
           </Lazy>
         ),
       },
-    ],
-  },
-  {
-    path: '/register',
-    element: (
-      <PublicOnly>
-        <AuthLayout />
-      </PublicOnly>
-    ),
-    children: [
       {
-        index: true,
+        path: 'signup',
         element: (
           <Lazy>
             <RegisterPage />
@@ -108,7 +111,7 @@ export const router = createBrowserRouter([
       </RequireAuth>
     ),
     children: [
-      { index: true, element: <Navigate to="/app/chat" replace /> },
+      { index: true, element: <Navigate to="/app/dashboard" replace /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'chat', element: <ChatPage /> },
       { path: 'products', element: <Lazy><ProductCompliancePage /></Lazy> },
@@ -126,11 +129,23 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'risk-center',
+        path: 'monitor',
         element: (
           <div className="flex-1 overflow-auto">
             <Lazy>
               <RiskCenter />
+            </Lazy>
+          </div>
+        ),
+      },
+      { path: 'risk-center', element: <Navigate to="/app/monitor" replace /> },
+      { path: 'settings', element: <Navigate to="/app/settings/profile" replace /> },
+      {
+        path: 'settings/profile',
+        element: (
+          <div className="flex-1 overflow-auto">
+            <Lazy>
+              <SettingsPage />
             </Lazy>
           </div>
         ),
@@ -145,9 +160,9 @@ export const router = createBrowserRouter([
           </div>
         ),
       },
-          {
-            path: 'notify-config',
-            element: (
+      {
+        path: 'notify-config',
+        element: (
           <div className="flex-1 overflow-auto">
             <Lazy>
               <NotifyConfigPage />

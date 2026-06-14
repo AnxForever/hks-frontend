@@ -11,14 +11,12 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from '@/components/ui/select'
 import type { SessionMessage } from '@/types'
 
 const chatProfiles = {
-  agents: ['合规查询 Agent', '风险预警 Agent', '知识检索 Agent'],
+  agents: ['合规查询智能体', '风险预警智能体', '知识检索智能体'],
   tools: ['Rule Engine (HS/VAT/认证)', 'RAG 检索 (ChromaDB)', '联网搜索', 'Shopify 产品导入'],
-  skills: ['产品合规', '风险分析', '认证清单', '市场监控', '跨境电商'],
 }
 
 interface AgentListItem {
@@ -37,6 +35,35 @@ const SUGGESTIONS = [
 
 const CHAT_WIDTH_CLASS = 'mx-auto w-full max-w-[1280px]'
 
+const agentDisplayLabels: Record<string, string> = {
+  '合规查询 Agent': '合规查询智能体',
+  '风险预警 Agent': '风险预警智能体',
+  '知识检索 Agent': '知识检索智能体',
+  CodexAgent: '通用智能体',
+  'Codex Agent': '通用智能体',
+  codex_agent: '通用智能体',
+  TestComplianceWorker: '合规检查智能体',
+  ComplianceWorker: '合规检查智能体',
+  RuleEngine: '规则引擎智能体',
+  rule_engine: '规则引擎智能体',
+  RAG: '法规检索智能体',
+  rag_search: '法规检索智能体',
+  NLU: '意图解析智能体',
+  nlu_parser: '意图解析智能体',
+  ConflictArbiter: '冲突仲裁智能体',
+  conflict_arbiter: '冲突仲裁智能体',
+}
+
+function displayAgentName(agent: string) {
+  const mapped = agentDisplayLabels[agent]
+  if (mapped) return mapped
+
+  const normalized = agent.replace(/[_-]/g, ' ')
+  const withoutAgentSuffix = normalized.replace(/\s*Agent\b/i, '智能体')
+  const hasEnglish = /[A-Za-z]/.test(withoutAgentSuffix)
+  return hasEnglish ? '自定义智能体' : withoutAgentSuffix
+}
+
 function WorkbenchBar({
   agents,
   activeAgent,
@@ -54,15 +81,15 @@ function WorkbenchBar({
             <Bot className="size-3.5 text-muted-foreground" />
             <Select value={activeAgent} onValueChange={onAgentChange}>
               <SelectTrigger
-                aria-label="选择 Agent"
+                aria-label="选择智能体"
                 className="h-6 min-w-[148px] border-0 bg-transparent px-0 py-0 text-[12px] font-medium shadow-none focus-visible:ring-1 focus-visible:ring-ring [&>svg]:size-3.5 [&>svg]:opacity-60"
               >
-                <SelectValue />
+                <span className="truncate">{displayAgentName(activeAgent)}</span>
               </SelectTrigger>
               <SelectContent className="min-w-[168px]">
                 {agents.map((agent) => (
                   <SelectItem key={agent} value={agent} className="text-[12px]">
-                    {agent}
+                    {displayAgentName(agent)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -73,15 +100,7 @@ function WorkbenchBar({
             {chatProfiles.tools.slice(0, 3).join(' | ')}
           </div>
         </div>
-        <div className="flex flex-wrap gap-1.5">
-          {chatProfiles.skills.map((skill) => (
-            <span
-              key={skill}
-              className="rounded-md bg-muted px-2 py-1 text-[11px] font-medium text-muted-foreground"
-            >
-              {skill}
-            </span>
-          ))}
+        <div className="flex shrink-0 items-center">
           <ChainHistoryDrawer />
         </div>
       </div>

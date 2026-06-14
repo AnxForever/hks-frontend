@@ -49,14 +49,18 @@ import {
 import { toast } from 'sonner'
 
 const mainNav: { to: string; label: string; Icon: React.ComponentType<{ className?: string }> }[] = [
-  { to: '/app/dashboard', label: '概览', Icon: LayoutDashboard },
-  { to: '/app/compliance/system', label: '系统合规', Icon: Radar },
-  { to: '/app/products', label: '产品合规', Icon: PackageCheck },
-  { to: '/app/chat', label: '对话工作台', Icon: MessageSquare },
-  { to: '/app/compliance', label: '合规查询', Icon: Search },
-  { to: '/app/risk-center', label: '风险监控', Icon: AlertTriangle },
-  { to: '/app/news-monitor', label: '新闻监控', Icon: Newspaper },
+  { to: '/app/dashboard', label: '首页', Icon: LayoutDashboard },
+  { to: '/app/chat', label: '智能对话', Icon: MessageSquare },
+  { to: '/app/monitor', label: '风险监控', Icon: AlertTriangle },
   { to: '/app/knowledge', label: '知识库', Icon: Library },
+  { to: '/app/settings/profile', label: '系统管理', Icon: Settings },
+]
+
+const toolNav: { to: string; label: string; Icon: React.ComponentType<{ className?: string }> }[] = [
+  { to: '/app/compliance/system', label: '店铺合规', Icon: Radar },
+  { to: '/app/products', label: '产品合规', Icon: PackageCheck },
+  { to: '/app/compliance', label: '合规查询', Icon: Search },
+  { to: '/app/news-monitor', label: '新闻监控', Icon: Newspaper },
   { to: '/app/nl-store', label: '记忆库', Icon: Brain },
 ]
 
@@ -153,6 +157,32 @@ export default function Sidebar() {
             {label}
           </NavLink>
         ))}
+
+        <div className="pt-5">
+          <div className="px-2.5 pb-1 text-[10.5px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+            合规工具
+          </div>
+          <div className="space-y-0.5">
+            {toolNav.map(({ to, label, Icon }) => (
+              <NavLink
+                key={to}
+                to={to}
+                onClick={handleNavClick}
+                className={({ isActive }) =>
+                  cn(
+                    'flex h-8 items-center gap-2.5 rounded-md px-2.5 text-[13.5px] transition-colors',
+                    isActive
+                      ? 'bg-foreground/[0.06] font-medium text-foreground'
+                      : 'text-foreground/75 hover:bg-muted/60 hover:text-foreground',
+                  )
+                }
+              >
+                <Icon className="size-4 shrink-0" />
+                {label}
+              </NavLink>
+            ))}
+          </div>
+        </div>
 
         {/* 会话历史 */}
         {isOnChat && (

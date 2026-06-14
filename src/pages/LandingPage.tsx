@@ -39,7 +39,7 @@ function Hero() {
               <p className="font-sans text-lg md:text-xl text-cream-foreground/80 leading-relaxed mb-12">
                 专为中小出海企业打造的 AI 合规助手。输入产品与目标国家，秒级生成 HS 编码、税率、认证清单和全面的合规报告。
               </p>
-              <Link to="/login" className="inline-block group">
+              <Link to="/auth/login" className="inline-block group">
                 <div className="flex items-center gap-3 text-sm text-cream-foreground/60 hover:text-cream-foreground transition-colors">
                   <span className="relative">
                     开始使用
@@ -165,7 +165,7 @@ function CallToAction() {
           <p className="font-sans text-lg text-cream-foreground/60 mb-12">
             让 AI 成为您的跨境合规专家
           </p>
-          <Link to="/login" className="inline-block group">
+          <Link to="/auth/login" className="inline-block group">
             <div className="flex items-center justify-center gap-3 text-sm text-cream-foreground/60 hover:text-cream-foreground transition-colors">
               <span className="relative">
                 免费开始

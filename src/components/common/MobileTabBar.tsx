@@ -1,14 +1,14 @@
 import { NavLink } from 'react-router-dom'
-import { AlertTriangle, LayoutDashboard, Library, MessageSquare, Radar } from 'lucide-react'
+import { AlertTriangle, LayoutDashboard, Library, MessageSquare, Settings } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
 const tabs = [
-  { to: '/app/dashboard', label: '概览', Icon: LayoutDashboard },
+  { to: '/app/dashboard', label: '首页', Icon: LayoutDashboard },
   { to: '/app/chat', label: '对话', Icon: MessageSquare },
-  { to: '/app/risk-center', label: '风险', Icon: AlertTriangle },
+  { to: '/app/monitor', label: '风险', Icon: AlertTriangle },
   { to: '/app/knowledge', label: '知识库', Icon: Library },
-  { to: '/app/compliance/system', label: '系统', Icon: Radar },
+  { to: '/app/settings/profile', label: '系统', Icon: Settings },
 ]
 
 /**

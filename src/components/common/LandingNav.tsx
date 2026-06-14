@@ -20,8 +20,8 @@ interface NavLink {
 
 const links: NavLink[] = [
   { label: '功能', to: '/#features', anchor: 'features' },
-  { label: '登录', to: '/login', variant: 'link' },
-  { label: '开始使用', to: '/login', variant: 'cta' },
+  { label: '登录', to: '/auth/login', variant: 'link' },
+  { label: '开始使用', to: '/auth/login', variant: 'cta' },
 ]
 
 /**

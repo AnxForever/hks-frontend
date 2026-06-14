@@ -27,6 +27,13 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { useConfirm } from '@/hooks/useConfirm'
 import {
   useCreateProduct,
@@ -476,26 +483,33 @@ function ProductLedgerCard({
       )}
 
       <div className="mt-auto flex flex-wrap items-center gap-2 pt-4">
-        <select
-          aria-label={`${product.name} 生命周期阶段`}
+        <Select
           value={product.lifecycle_stage}
-          onChange={(e) => {
-            const next = e.target.value as ProductLifecycle
+          onValueChange={(value) => {
+            const next = value as ProductLifecycle
             if (next !== product.lifecycle_stage) onLifecycle(next)
           }}
           disabled={busy}
-          className="h-8 rounded-md border border-border/70 bg-background px-2 text-[12px] outline-none focus:ring-1 focus:ring-ring"
         >
-          {lifecycleSteps.map((stage) => (
-            <option
-              key={stage}
-              value={stage}
-              disabled={stage !== product.lifecycle_stage && !allowedNextStages.includes(stage)}
-            >
-              {lifecycleLabels[stage]}
-            </option>
-          ))}
-        </select>
+          <SelectTrigger
+            aria-label={`${product.name} 生命周期阶段`}
+            className="h-8 w-[88px] border-border/70 bg-background px-2 text-[12px] shadow-none"
+          >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent align="start" className="min-w-[112px]">
+            {lifecycleSteps.map((stage) => (
+              <SelectItem
+                key={stage}
+                value={stage}
+                disabled={stage !== product.lifecycle_stage && !allowedNextStages.includes(stage)}
+                className="text-[12px]"
+              >
+                {lifecycleLabels[stage]}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         <Button variant="outline" size="sm" className="h-8 text-[12px]" disabled={busy} onClick={onCheck}>
           <ShieldCheck className="mr-1.5 size-3.5" />
           检查

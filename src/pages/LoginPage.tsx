@@ -36,7 +36,7 @@ export default function LoginPage() {
           <div className="mt-8 text-center text-sm text-muted-foreground">
             没有账户？{' '}
             <Link
-              to="/register"
+              to="/auth/signup"
               className="text-cream-foreground hover:underline underline-offset-4"
             >
               创建账户
